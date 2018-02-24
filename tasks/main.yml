@@ -1,0 +1,22 @@
+---
+# run everywhere
+
+- name: Install python bindings 
+  yum: name={{ item }} state=present
+  with_items:
+   - libsemanage-python
+   - libselinux-python
+  tags: centos
+
+- name: Add EPEL repo
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    gpgcheck: no
+  tags: centos
+
+- name: Install python for Ansible
+  raw: apt-get -y update && apt-get install -y python-minimal
+  tags: debian
+
